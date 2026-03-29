@@ -951,7 +951,7 @@ button {
 @media (max-width: 720px) {
   .app-shell {
     gap: 1.25rem;
-    padding: 1rem;
+    padding: 1rem 1rem 3rem;
   }
 
   .layout-toolbar,
@@ -989,7 +989,7 @@ button {
   }
 
   .preview-shell {
-    width: min(100%, 24rem, calc((100svh - 10.5rem) * 4 / 5));
+    width: min(100%, 26rem, calc((100svh - 9.5rem) * 4 / 5));
     margin: 1rem auto 0;
   }
 
@@ -1004,7 +1004,7 @@ button {
 
 @media (max-width: 480px) {
   .app-shell {
-    padding: 0.75rem;
+    padding: 0.75rem 0.75rem 4rem;
   }
 
   .panel {
@@ -1044,7 +1044,7 @@ button {
   }
 
   .preview-shell {
-    width: min(100%, 21rem, calc((100svh - 10rem) * 4 / 5));
+    width: min(100%, 22.75rem, calc((100svh - 8.75rem) * 4 / 5));
     margin: 0.85rem auto 0;
   }
 }
