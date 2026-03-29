@@ -25,8 +25,6 @@ function HeroOverlayTemplate({
     <>
       <div className="template-overlay template-overlay--hero" />
       <div className="template-hero">
-        <span className="template-badge">{definition.eyebrow}</span>
-
         <div className="template-copy">
           <h2 className="template-title template-title--hero">{title}</h2>
           {hasDescription ? (
@@ -40,11 +38,6 @@ function HeroOverlayTemplate({
           <div className="price-chip">
             <span className="price-chip__label">{definition.priceLabel}</span>
             <strong className="price-chip__value">{priceText}</strong>
-          </div>
-
-          <div className="accent-card">
-            <span className="accent-card__title">Setup</span>
-            <span className="accent-card__value">{definition.accent}</span>
           </div>
         </div>
       </div>
@@ -63,13 +56,8 @@ function GlassCardTemplate({
     <>
       <div className="template-overlay template-overlay--glass" />
       <div className="template-glass">
-        <div className="template-glass__accent">{definition.accent}</div>
-
         <div className="glass-card">
           <div className="glass-card__copy">
-            <span className="template-badge template-badge--dark">
-              {definition.eyebrow}
-            </span>
             <h2 className="template-title">{title}</h2>
             {hasDescription ? (
               <p className="template-description">{description}</p>
@@ -98,9 +86,6 @@ function SplitPromoTemplate({
       <div className="template-overlay template-overlay--split" />
       <div className="template-split">
         <div className="split-panel">
-          <span className="template-badge template-badge--dark">
-            {definition.eyebrow}
-          </span>
           <h2 className="template-title template-title--split">{title}</h2>
           {hasDescription ? (
             <p className="template-description template-description--split">
@@ -114,8 +99,6 @@ function SplitPromoTemplate({
             <span className="split-price__label">{definition.priceLabel}</span>
             <strong className="split-price__value">{priceText}</strong>
           </div>
-
-          <div className="split-panel__footer">{definition.accent}</div>
         </div>
       </div>
     </>
@@ -135,9 +118,6 @@ function BottomBandTemplate({
       <div className="template-bottom-band">
         <div className="bottom-band">
           <div className="bottom-band__copy">
-            <span className="template-badge template-badge--dark">
-              {definition.eyebrow}
-            </span>
             <h2 className="template-title template-title--band">{title}</h2>
             {hasDescription ? (
               <p className="template-description template-description--band">
@@ -147,7 +127,6 @@ function BottomBandTemplate({
           </div>
 
           <div className="bottom-band__meta">
-            <div className="bottom-band__accent">{definition.accent}</div>
             <div className="bottom-band__price">
               <span className="bottom-band__label">{definition.priceLabel}</span>
               <strong className="bottom-band__value">{priceText}</strong>
@@ -173,9 +152,6 @@ function TopFrameTemplate({
         <div className="top-frame__panel">
           <div className="top-frame__row">
             <div className="top-frame__copy">
-              <span className="template-badge template-badge--dark">
-                {definition.eyebrow}
-              </span>
               <h2 className="template-title template-title--frame">{title}</h2>
               {hasDescription ? (
                 <p className="template-description template-description--frame">
@@ -189,7 +165,6 @@ function TopFrameTemplate({
                 <span className="top-frame__label">{definition.priceLabel}</span>
                 <strong className="top-frame__value">{priceText}</strong>
               </div>
-              <div className="top-frame__accent">{definition.accent}</div>
             </div>
           </div>
         </div>
@@ -210,9 +185,6 @@ function CenteredFocusTemplate({
       <div className="template-overlay template-overlay--centered-focus" />
       <div className="template-centered-focus">
         <div className="centered-focus-card">
-          <span className="template-badge template-badge--dark">
-            {definition.eyebrow}
-          </span>
           <h2 className="template-title template-title--centered">{title}</h2>
           {hasDescription ? (
             <p className="template-description template-description--centered">
@@ -226,10 +198,6 @@ function CenteredFocusTemplate({
                 {definition.priceLabel}
               </span>
               <strong className="centered-focus-card__value">{priceText}</strong>
-            </div>
-
-            <div className="centered-focus-card__accent">
-              {definition.accent}
             </div>
           </div>
         </div>
@@ -265,6 +233,8 @@ export function TemplateCanvas({ inputs, variant }: TemplateCanvasProps) {
   const priceText = inputs.priceText.trim() || '$9.99';
   const description = inputs.description.trim();
   const hasDescription = Boolean(description);
+  const logoUrl = inputs.logoImage.url ?? undefined;
+  const hasLogo = Boolean(logoUrl);
 
   const commonProps = {
     definition,
@@ -275,7 +245,11 @@ export function TemplateCanvas({ inputs, variant }: TemplateCanvasProps) {
   };
 
   return (
-    <div className={`template-canvas template-canvas--${variant}`}>
+    <div
+      className={`template-canvas template-canvas--${variant}${
+        hasLogo ? ' template-canvas--has-logo' : ''
+      }`}
+    >
       {inputs.backgroundImage.url ? (
         <div
           className="template-media"
@@ -293,9 +267,9 @@ export function TemplateCanvas({ inputs, variant }: TemplateCanvasProps) {
       <div className="template-noise" />
       <div className="template-vignette" />
 
-      {inputs.logoImage.url ? (
+      {hasLogo ? (
         <div className="template-logo">
-          <img src={inputs.logoImage.url} alt="Uploaded brand logo" />
+          <img src={logoUrl} alt="Uploaded brand logo" />
         </div>
       ) : null}
 

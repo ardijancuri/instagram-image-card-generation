@@ -16,8 +16,8 @@ interface ControlPanelProps {
 interface AssetFieldProps {
   accept: string;
   asset: ImageAsset;
-  helper: string;
   label: string;
+  required?: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onClear: () => void;
 }
@@ -25,34 +25,52 @@ interface AssetFieldProps {
 function AssetField({
   accept,
   asset,
-  helper,
   label,
+  required = false,
   onChange,
   onClear,
 }: AssetFieldProps) {
   const inputId = `${label.toLowerCase().replace(/\s+/g, '-')}-input`;
 
   return (
-    <label className="field field--file" htmlFor={inputId}>
-      <span className="field__label">{label}</span>
-      <span className="field__helper">{helper}</span>
-      <input id={inputId} type="file" accept={accept} onChange={onChange} />
-      <span className="field__file-name">
-        {asset.name ?? 'No file selected yet'}
+    <div className="field field--file">
+      <span className="field__label">
+        {label}
+        {required ? <span className="field__required">*</span> : null}
       </span>
-      {asset.url ? (
-        <button
-          className="field__clear"
-          type="button"
-          onClick={(event) => {
-            event.preventDefault();
-            onClear();
-          }}
-        >
-          Remove
-        </button>
-      ) : null}
-    </label>
+      <div className="field__file-row">
+        <input
+          id={inputId}
+          className="field__file-input sr-only"
+          type="file"
+          accept={accept}
+          aria-label={label}
+          onChange={onChange}
+        />
+        <label className="field__file-trigger" htmlFor={inputId}>
+          Choose file
+        </label>
+        {asset.url ? (
+          <button
+            className="field__clear"
+            type="button"
+            aria-label={`Delete ${label.toLowerCase()}`}
+            onClick={onClear}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 7h16" />
+              <path d="M9 4h6" />
+              <path d="M7 7l1 12h8l1-12" />
+              <path d="M10 11v5" />
+              <path d="M14 11v5" />
+            </svg>
+          </button>
+        ) : null}
+      </div>
+      <span className="field__file-name">
+        {asset.name ?? 'No file selected'}
+      </span>
+    </div>
   );
 }
 
@@ -85,8 +103,8 @@ export function ControlPanel({
 
       <div className="form-grid">
         <AssetField
-          label="Background image"
-          helper="Required."
+          label="Background"
+          required
           asset={inputs.backgroundImage}
           accept="image/*"
           onChange={handleFileChange('backgroundImage')}
@@ -94,17 +112,18 @@ export function ControlPanel({
         />
 
         <AssetField
-          label="Logo image"
-          helper="Optional."
+          label="Logo"
           asset={inputs.logoImage}
           accept="image/*"
           onChange={handleFileChange('logoImage')}
           onClear={() => onImageChange('logoImage', null)}
         />
 
-        <label className="field" htmlFor="title-input">
-          <span className="field__label">Title</span>
-          <span className="field__helper">Required.</span>
+        <label className="field field--full" htmlFor="title-input">
+          <span className="field__label">
+            Title
+            <span className="field__required">*</span>
+          </span>
           <input
             id="title-input"
             name="title"
@@ -117,8 +136,10 @@ export function ControlPanel({
         </label>
 
         <label className="field" htmlFor="price-input">
-          <span className="field__label">Price</span>
-          <span className="field__helper">Required.</span>
+          <span className="field__label">
+            Price
+            <span className="field__required">*</span>
+          </span>
           <input
             id="price-input"
             name="price"
@@ -132,7 +153,6 @@ export function ControlPanel({
 
         <label className="field field--full" htmlFor="description-input">
           <span className="field__label">Description</span>
-          <span className="field__helper">Optional.</span>
           <textarea
             id="description-input"
             name="description"

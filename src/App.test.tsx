@@ -51,7 +51,7 @@ describe('App', () => {
   it('enables export when the required inputs are present', () => {
     render(<App />);
 
-    fireEvent.change(screen.getByLabelText(/background image/i), {
+    fireEvent.change(screen.getByLabelText(/background/i), {
       target: {
         files: [new File(['image'], 'background.png', { type: 'image/png' })],
       },

@@ -166,11 +166,11 @@ button {
 .field {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
-  padding: 1rem;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, rgba(205, 219, 233, 0.16), rgba(205, 219, 233, 0.08));
+  gap: 0.55rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
 }
 
 .field--full {
@@ -178,14 +178,17 @@ button {
 }
 
 .field__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
   color: var(--text-primary);
   font-weight: 600;
 }
 
-.field__helper {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  line-height: 1.4;
+.field__required {
+  color: var(--brand-red);
+  font-size: 1rem;
+  line-height: 1;
 }
 
 .field input[type="text"],
@@ -209,40 +212,80 @@ button {
 
 .field input[type="text"]:focus,
 .field textarea:focus,
-.field input[type="file"]:focus-visible,
 .layout-select select:focus {
   border-color: rgba(239, 73, 75, 0.42);
   box-shadow: 0 0 0 4px rgba(239, 73, 75, 0.12);
 }
 
-.field input[type="file"] {
-  width: 100%;
-  color: var(--text-secondary);
+.field__file-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
 }
 
-.field input[type="file"]::file-selector-button {
-  margin-right: 0.75rem;
-  border: 1px solid var(--line);
-  padding: 0.7rem 0.9rem;
+.field__file-trigger,
+.field__clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-height: 2.8rem;
+  border: 1px solid var(--line-strong);
   border-radius: 999px;
-  color: var(--text-primary);
   background: #ffffff;
+  color: var(--text-primary);
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.field__file-trigger {
+  padding: 0.72rem 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .field__file-name {
   color: var(--text-secondary);
-  font-size: 0.92rem;
+  font-size: 0.76rem;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .field__clear {
-  align-self: flex-start;
-  border: 0;
+  width: 2.8rem;
   padding: 0;
   color: var(--brand-red);
-  background: transparent;
-  font-size: 0.92rem;
-  font-weight: 600;
+  cursor: pointer;
+}
+
+.field__clear svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.field__file-trigger:hover,
+.field__clear:hover {
+  border-color: rgba(239, 73, 75, 0.34);
+  background: rgba(239, 73, 75, 0.04);
+}
+
+.field__file-input:focus-visible + .field__file-trigger,
+.field__clear:focus-visible {
+  border-color: rgba(239, 73, 75, 0.42);
+  box-shadow: 0 0 0 4px rgba(239, 73, 75, 0.12);
+  outline: none;
 }
 
 .export-bar {
@@ -349,6 +392,10 @@ button {
 }
 
 .template-canvas {
+  --logo-top: 5.1%;
+  --logo-left: 5.1%;
+  --logo-max-width: 18cqw;
+  --logo-max-height: 8.8cqw;
   position: relative;
   isolation: isolate;
   width: 100%;
@@ -439,43 +486,40 @@ button {
   display: none;
 }
 
+.template-canvas--split-promo {
+  --logo-top: 4.4%;
+  --logo-left: 4.4%;
+  --logo-max-width: 15.8cqw;
+  --logo-max-height: 7.8cqw;
+}
+
+.template-canvas--top-frame {
+  --logo-top: 4.4%;
+  --logo-left: 4.4%;
+  --logo-max-width: 15.8cqw;
+  --logo-max-height: 7.2cqw;
+}
+
 .template-logo {
   position: absolute;
-  top: 5.1%;
-  left: 5.1%;
+  top: var(--logo-top);
+  left: var(--logo-left);
   z-index: 3;
-  display: grid;
-  place-items: center;
-  width: 16.5%;
-  min-height: 10%;
-  padding: 1.15cqw;
-  border-radius: 2cqw;
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 1cqw 3cqw rgba(17, 24, 39, 0.08);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: var(--logo-max-width);
+  max-height: var(--logo-max-height);
+  pointer-events: none;
 }
 
 .template-logo img {
-  width: 100%;
+  width: auto;
   height: auto;
+  max-width: 100%;
+  max-height: 100%;
   display: block;
   object-fit: contain;
-}
-
-.template-badge {
-  display: inline-flex;
-  width: fit-content;
-  padding: 1cqw 1.55cqw;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--brand-dark);
-  font-size: 1.42cqw;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.template-badge--dark {
-  background: rgba(205, 219, 233, 0.88);
 }
 
 .template-title {
@@ -548,12 +592,11 @@ button {
 .template-hero__footer {
   display: flex;
   align-items: flex-end;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 1.8cqw;
 }
 
 .price-chip,
-.accent-card,
 .glass-card__price,
 .split-price,
 .bottom-band__price,
@@ -601,45 +644,14 @@ button {
   letter-spacing: -0.05em;
 }
 
-.accent-card {
-  min-width: 18cqw;
-  padding: 1.5cqw 1.8cqw;
-  border-radius: 2.2cqw;
-  background: rgba(17, 24, 39, 0.42);
-  backdrop-filter: blur(0.7cqw);
-}
-
-.accent-card__title {
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 1.3cqw;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.accent-card__value {
-  font-size: 1.95cqw;
-  font-weight: 700;
-}
-
 .template-glass {
   position: absolute;
   inset: 0;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 9.4cqw 5.1% 5.1%;
-}
-
-.template-glass__accent {
-  align-self: flex-end;
-  padding: 0.95cqw 1.45cqw;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.88);
-  color: var(--text-secondary);
-  font-size: 1.52cqw;
-  font-weight: 600;
 }
 
 .glass-card {
@@ -690,6 +702,10 @@ button {
   align-items: stretch;
 }
 
+.template-canvas--has-logo.template-canvas--split-promo .split-panel {
+  padding-top: 20.2cqw;
+}
+
 .split-panel {
   display: flex;
   flex-direction: column;
@@ -708,17 +724,6 @@ button {
 .split-price {
   padding-top: 1.3cqw;
   border-top: 0.1cqw solid rgba(17, 24, 39, 0.12);
-}
-
-.split-panel__footer {
-  display: inline-flex;
-  width: fit-content;
-  padding: 0.9cqw 1.35cqw;
-  border-radius: 999px;
-  background: rgba(239, 73, 75, 0.12);
-  color: var(--brand-red);
-  font-size: 1.52cqw;
-  font-weight: 700;
 }
 
 .template-bottom-band {
@@ -757,15 +762,6 @@ button {
   align-items: flex-end;
 }
 
-.bottom-band__accent {
-  padding: 0.9cqw 1.35cqw;
-  border-radius: 999px;
-  background: rgba(205, 219, 233, 0.44);
-  color: var(--brand-dark);
-  font-size: 1.45cqw;
-  font-weight: 700;
-}
-
 .bottom-band__price {
   padding: 1.6cqw 2.1cqw;
   border-radius: 2.5cqw;
@@ -788,6 +784,10 @@ button {
   display: flex;
   align-items: flex-start;
   padding: 16cqw 4.4% 0;
+}
+
+.template-canvas--has-logo.template-canvas--top-frame .template-top-frame {
+  padding-top: 19.6cqw;
 }
 
 .top-frame__panel {
@@ -835,15 +835,6 @@ button {
   color: #ffffff;
 }
 
-.top-frame__accent {
-  padding: 0.85cqw 1.3cqw;
-  border-radius: 999px;
-  background: rgba(205, 219, 233, 0.4);
-  color: var(--brand-dark);
-  font-size: 1.42cqw;
-  font-weight: 700;
-}
-
 .template-centered-focus {
   position: absolute;
   inset: 0;
@@ -878,15 +869,6 @@ button {
   padding: 1.7cqw 2.15cqw;
   border-radius: 2.6cqw;
   background: rgba(239, 73, 75, 0.1);
-}
-
-.centered-focus-card__accent {
-  padding: 0.85cqw 1.25cqw;
-  border-radius: 999px;
-  background: rgba(205, 219, 233, 0.42);
-  color: var(--brand-dark);
-  font-size: 1.42cqw;
-  font-weight: 700;
 }
 
 .template-canvas--hero-overlay .template-title,
@@ -1049,8 +1031,8 @@ button {
     padding: 1rem;
   }
 
-  .field {
-    padding: 0.85rem;
+  .field__file-row {
+    gap: 0.35rem;
   }
 
   .export-bar {

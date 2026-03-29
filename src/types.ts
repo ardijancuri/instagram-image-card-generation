@@ -25,7 +25,5 @@ export interface DesignInputs {
 export interface TemplateDefinition {
   id: TemplateVariant;
   name: string;
-  eyebrow: string;
-  accent: string;
   priceLabel: string;
 }
