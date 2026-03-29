@@ -9,7 +9,9 @@ const formatMissingFields = (missingFields: string[]) => {
     return `${missingFields[0]} and ${missingFields[1]}`;
   }
 
-  return `${missingFields.slice(0, -1).join(', ')}, and ${missingFields.at(-1)}`;
+  return `${missingFields.slice(0, -1).join(', ')}, and ${
+    missingFields[missingFields.length - 1]
+  }`;
 };
 
 export const isExportReady = (inputs: DesignInputs) =>
