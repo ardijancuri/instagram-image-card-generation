@@ -11,6 +11,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@fontsource/plus-jakarta-sans": "^5.2.8",
+    "@fontsource/sora": "^5.2.8",
     "html-to-image": "latest",
     "react": "latest",
     "react-dom": "latest"

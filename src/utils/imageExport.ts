@@ -14,7 +14,7 @@ export const exportNodeAsImage = async (
   fileName: string,
 ) => {
   const options = {
-    cacheBust: true,
+    cacheBust: false,
     pixelRatio: 1,
   };
 
